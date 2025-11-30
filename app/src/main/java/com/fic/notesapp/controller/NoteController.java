@@ -28,5 +28,18 @@ public class NoteController {
 
     }
 
+    public void updateNote(int noteId, int categoryId, String title, String content, String createdAt) {
+
+        Note note = new Note();
+        note.note_id = noteId;
+        note.note_title = title;
+        note.note_content = content;
+        note.category_id = categoryId;
+        note.created_at = createdAt;
+
+        noteDao.updateNote(note);
+
+    }
+
     public List<Note> getAllNotes() { return noteDao.getAllNotes(); }
 }

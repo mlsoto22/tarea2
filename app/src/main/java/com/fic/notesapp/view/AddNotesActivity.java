@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.fic.notesapp.R;
 import com.fic.notesapp.controller.CategoryController;
 import com.fic.notesapp.controller.NoteController;
+import com.fic.notesapp.model.CategorySpinner;
 import com.fic.notesapp.model.category.Category;
 import com.fic.notesapp.model.note.Note;
 import com.google.android.material.transformation.ExpandableTransformationBehavior;
@@ -36,31 +38,64 @@ public class AddNotesActivity extends AppCompatActivity {
     Spinner spCategory;
     AppCompatButton btnAddNote;
     int idCategory = 1;
-    boolean extra = getIntent().getBooleanExtra("ON_EDIT", false);
+    boolean extraBoolean;
+    int extraCategoryId;
+    String extraNoteTitle, extraNoteCategoryName;
+    String extraNoteContent;
+    int extraNoteId;
+    TextView tvViewName;
+    List<Category> listCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_notes);
+        initControllers();
         initComponents();
         initListeners();
 
     }
 
-    private void initComponents() {
+    private void initControllers(){
+        if (noteController == null && categoryController == null){
+            noteController = new NoteController(this);
+            categoryController = new CategoryController(this);
+        }
+        extraBoolean = getIntent().getBooleanExtra("ON_EDIT", false);
+    }
 
-        noteController = new NoteController(this);
-        categoryController = new CategoryController(this);
+    private void initComponents() {
+        Log.i("ON_EDIT", "ON_EDIT: " + extraBoolean);
         etTitle = findViewById(R.id.etTitle);
         etContent = findViewById(R.id.etContent);
         btnAddNote = findViewById(R.id.addNote);
+        tvViewName = findViewById(R.id.tvViewName);
+
+        if (extraBoolean){
+            initExtras();
+            etTitle.setText(extraNoteTitle);
+            etContent.setText(extraNoteContent);
+            tvViewName.setText("Actualizar nota");
+            btnAddNote.setText("Actualizar");
+        }
+
         initSpinner();
     }
 
+    private void initExtras(){
+        extraNoteContent = getIntent().getStringExtra("NOTE_CONTENT");
+        extraNoteTitle = getIntent().getStringExtra("NOTE_TITLE");
+        extraCategoryId = getIntent().getIntExtra("NOTE_CATEGORY_ID", 1);
+        extraNoteId = getIntent().getIntExtra("NOTE_ID", 1);
+        extraNoteCategoryName = getIntent().getStringExtra("NOTE_CATEGORY_NAME");
+    }
+
     private void initSpinner(){
-        List<Category> listCategories = categoryController.getAllCategories();
+        listCategories = categoryController.getAllCategories();
+        List<CategorySpinner> listCategoriesSpinners = new ArrayList<>();
         List<String> listCategoriesNames = new ArrayList<>();
         for(Category category : listCategories){
+            listCategoriesSpinners.add(new CategorySpinner(category.category_name, category.category_id));
             listCategoriesNames.add(category.category_name);
         }
 
@@ -73,17 +108,21 @@ public class AddNotesActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategory.setAdapter(adapter);
 
+        if (extraBoolean){
+            spCategory.setSelection(listCategoriesNames.indexOf(extraNoteCategoryName));
+        }
+
         spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Category selectedCategory = listCategories.get(position);
-                Log.i("SELECTED_CATEGORY", "Categoria seleccionada: " + selectedCategory.category_id);
-                idCategory = selectedCategory.category_id;
+                CategorySpinner selectedCategory = listCategoriesSpinners.get(position);
+                Log.i("SELECTED_CATEGORY", "Categoria seleccionada: " + selectedCategory.categoryName + " ID: " + selectedCategory.categoryId);
+                idCategory = selectedCategory.categoryId;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                idCategory = listCategories.get(0).category_id;
+                idCategory = listCategoriesSpinners.get(0).categoryId;
             }
         });
     }
@@ -91,14 +130,32 @@ public class AddNotesActivity extends AppCompatActivity {
     private void initListeners() {
 
         btnAddNote.setOnClickListener(v -> {
-            if(validarDatos()){
-                
-                saveNote();
-                finish();
-                
+
+
+            if (extraBoolean){
+                if(validarDatos()){
+                    updateNote();
+                    finish();
+                }
+            } else {
+                if(validarDatos()){
+
+                    saveNote();
+                    finish();
+
+                }
             }
         });
 
+    }
+
+    private void updateNote(){
+        try {
+            noteController.updateNote(extraNoteId, idCategory, etTitle.getText().toString(), etContent.getText().toString(), "10/10/2023");
+            Toast.makeText(this, "La nota se ha actualizado correctamente", Toast.LENGTH_SHORT).show();
+        } catch (Exception e){
+            Toast.makeText(this, "No se ha podido actualizar la nota", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void saveNote() {
@@ -108,7 +165,7 @@ public class AddNotesActivity extends AppCompatActivity {
             Toast.makeText(this, "La nota se ha guardado correctamente", Toast.LENGTH_SHORT).show();
         } catch (Exception e){
             Toast.makeText(this, "No se ha podido añadir la nota", Toast.LENGTH_SHORT).show();
-            Log.i("ERROR_ADD_NOTE", "Error al guardar la nota: " + e.getMessage());
+            Log.i("ERROR_ADD_NOTE", "Error al guardar la nota, cat_id: " + idCategory + "Error: " + e.getMessage());
         }
         
     }

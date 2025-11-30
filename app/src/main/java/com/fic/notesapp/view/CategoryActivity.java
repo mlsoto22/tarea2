@@ -73,7 +73,7 @@ public class CategoryActivity extends AppCompatActivity {
         noteAdapter = new NoteAdapter(new NoteAdapter.OnNoteActionListener() {
             @Override
             public void onEdit(Note note) {
-                addNoteActivity(true);
+                addNoteActivity(true, note);
             }
         });
         noteAdapter.setData(noteController.getAllNotes());
@@ -93,7 +93,7 @@ public class CategoryActivity extends AppCompatActivity {
         });
 
         fabAddNote.setOnClickListener(view -> {
-            addNoteActivity(false);
+            addNoteActivity(false, null);
         });
 
     }
@@ -106,11 +106,16 @@ public class CategoryActivity extends AppCompatActivity {
         noteAdapter.setData(noteController.getAllNotes());
     }
 
-    private void addNoteActivity(boolean onEdit){
+    private void addNoteActivity(boolean onEdit, Note note){
         Intent intent = new Intent(this, AddNotesActivity.class);
 
         if (onEdit){
             intent.putExtra("ON_EDIT", true);
+            intent.putExtra("NOTE_CATEGORY_ID", note.category_id);
+            intent.putExtra("NOTE_TITLE", note.note_title);
+            intent.putExtra("NOTE_CONTENT", note.note_content);
+            intent.putExtra("NOTE_ID", note.note_id);
+            intent.putExtra("NOTE_CATEGORY_NAME", categoryController.getCategoryById(note.category_id).category_name);
             startActivity(intent);
         } else {
             intent.putExtra("ON_EDIT", false);
