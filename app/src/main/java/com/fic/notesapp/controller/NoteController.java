@@ -51,4 +51,6 @@ public class NoteController {
 
     public void updateNotesCategoryByDefault(int idCategoryDeleted) {noteDao.updateNotesCategoryByDefault(idCategoryDeleted);}
 
+    public List<Note> searchNotes(String text) { return noteDao.searchNotes(text); }
+
 }

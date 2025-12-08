@@ -7,6 +7,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,14 +17,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fic.notesapp.R;
 import com.fic.notesapp.controller.CategoryController;
+import com.fic.notesapp.controller.HistoryController;
 import com.fic.notesapp.controller.NoteController;
 import com.fic.notesapp.model.category.Category;
 import com.fic.notesapp.model.note.Note;
 import com.fic.notesapp.view.category.CategoryAdapter;
 import com.fic.notesapp.view.note.NoteAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -31,10 +38,13 @@ public class CategoryActivity extends AppCompatActivity {
     NoteAdapter noteAdapter;
     RecyclerView rvNotes;
     CategoryController categoryController;
+    HistoryController historyController;
     NoteController noteController;
     FloatingActionButton fabAdd, fabAddNote;
     TextView tvNotesCount;
     List<Integer> searchList;
+    ImageButton btnHistory;
+    SearchView svSearch;
 
 
 
@@ -61,10 +71,13 @@ public class CategoryActivity extends AppCompatActivity {
         rvNotes = findViewById(R.id.rvNotes);
         categoryController = new CategoryController(this);
         noteController = new NoteController(this);
+        historyController = new HistoryController(this);
         fabAdd = findViewById(R.id.fabAdd);
         fabAddNote = findViewById(R.id.fabAddNote);
         searchList = new ArrayList<>();
         tvNotesCount = findViewById(R.id.tvNotesCount);
+        btnHistory = findViewById(R.id.btnHistory);
+        svSearch = findViewById(R.id.svSearch);
 
     }
 
@@ -127,6 +140,31 @@ public class CategoryActivity extends AppCompatActivity {
             addNoteActivity(false, null);
         });
 
+        btnHistory.setOnClickListener(view -> {
+            Intent intent = new Intent(this, HistoryActivity.class);
+            startActivity(intent);
+        });
+
+        svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                new Thread(() -> {
+                    List<Note> result = noteController.searchNotes(s);
+
+                    runOnUiThread(() -> noteAdapter.setData(result));
+                }).start();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+        });
+
     }
 
     private void refreshCategories() {
@@ -172,7 +210,6 @@ public class CategoryActivity extends AppCompatActivity {
         try {
             noteController.updateNotesCategoryByDefault(category.category_id);
             categoryController.deleteCategory(category);
-
         } catch (Exception e){
             Log.i("ERROR_DELETE_CATEGORY", "Error al eliminar categoria:" + e.getMessage());
         }
@@ -205,6 +242,11 @@ public class CategoryActivity extends AppCompatActivity {
 
         dialog.show();
 
+    }
+
+    public String getCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        return sdf.format(new Date());
     }
 
 }

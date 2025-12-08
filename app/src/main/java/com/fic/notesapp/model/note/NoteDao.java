@@ -35,4 +35,7 @@ public interface NoteDao {
 
     @Query("UPDATE note SET category_id = 1 WHERE category_id = :idCategoryDeleted")
     void updateNotesCategoryByDefault(int idCategoryDeleted);
+
+    @Query("SELECT * FROM note WHERE note_title LIKE '%' || :text || '%' OR note_content LIKE '%' || :text || '%' ORDER BY note_id DESC")
+    List<Note> searchNotes(String text);
 }

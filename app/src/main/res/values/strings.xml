@@ -66,4 +66,11 @@
     <string name="delete_category_alert">¿Estas seguro que quieres eliminar esta categoria?</string>
     <string name="linked_notes">notas asociadas perderan su categoria</string>
     <string name="tv_notes_activity_category_count">" -> 0"</string>
+    <string name="tv_title_history">Historial</string>
+
+    <string-array name="action_history">
+        <item>CREADO</item>
+        <item>ACTUALIZADO</item>
+        <item>ELIMINADO</item>
+    </string-array>
 </resources>
