@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fic.notesapp.R;
 import com.fic.notesapp.controller.CategoryController;
-import com.fic.notesapp.controller.HistoryController;
 import com.fic.notesapp.controller.NoteController;
 import com.fic.notesapp.model.category.Category;
 import com.fic.notesapp.model.note.Note;
@@ -32,15 +31,11 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     NoteController noteController;
     Category category;
     CardView cvNoteParent;
-    HistoryController historyController;
-
 
     public NoteViewHolder(@NonNull View itemView) {
         super(itemView);
         categoryController = new CategoryController(itemView.getContext());
         noteController = new NoteController(itemView.getContext());
-        historyController = new HistoryController(itemView.getContext());
-
     }
 
     public void render(Note item, NoteAdapter.OnNoteActionListener listener) {
@@ -97,7 +92,6 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     private void deleteNote(Note note) {
         try{
             noteController.deleteNote(note);
-            historyController.insertHistory("D", "Se ha eliminado una tarjeta de la categoria: \n\n" + category.category_name, getCurrentDate());
             Toast.makeText(itemView.getContext(), "Se ha eliminado la nota", Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(itemView.getContext(), "Error al eliminar la nota", Toast.LENGTH_SHORT).show();

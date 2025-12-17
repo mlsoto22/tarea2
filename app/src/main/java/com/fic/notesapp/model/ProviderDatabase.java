@@ -10,21 +10,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.fic.notesapp.model.category.Category;
 import com.fic.notesapp.model.category.CategoryDao;
-import com.fic.notesapp.model.history.History;
-import com.fic.notesapp.model.history.HistoryDao;
 import com.fic.notesapp.model.note.Note;
 import com.fic.notesapp.model.note.NoteDao;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Category.class, Note.class, History.class},version = 1, exportSchema = false)
+@Database(entities = {Category.class, Note.class},version = 1, exportSchema = false)
 public abstract class ProviderDatabase extends RoomDatabase {
 
     private static ProviderDatabase INSTANCE;
     public abstract CategoryDao categoryDao();
     public abstract NoteDao noteDao();
-    public abstract HistoryDao historyDao();
-
 
     public static synchronized ProviderDatabase getInstance(Context context){
         if(INSTANCE == null){

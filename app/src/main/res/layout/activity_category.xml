@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:text="@string/tv_category_activity_category"
             android:textSize="22sp"
-            android:fontFamily="monospace"
             android:textStyle="bold"
             android:paddingBottom="8dp" />
 
@@ -43,7 +42,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_notes_activity_category"
-                android:fontFamily="monospace"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:paddingBottom="8dp" />
@@ -53,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_notes_activity_category_count"
-                android:fontFamily="monospace"/>
+                />
 
             <SearchView
                 android:id="@+id/svSearch"
@@ -68,13 +66,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-            <ImageButton
-                android:id="@+id/btnHistory"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_record"
-                android:backgroundTint="@color/white"
-                android:layout_gravity="center" />
 
         </LinearLayout>
 
@@ -101,20 +92,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="80dp"
-            android:src="@drawable/ic_note_add"
+            android:src="@drawable/notas"
             app:fabSize="normal"
             app:tint="@color/white"
-            android:backgroundTint="@color/black" />
+            android:backgroundTint="#572364" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/add_24px"
             app:fabSize="normal"
             app:tint="@color/white"
-            android:backgroundTint="@color/black" />
+            android:backgroundTint="#572364" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

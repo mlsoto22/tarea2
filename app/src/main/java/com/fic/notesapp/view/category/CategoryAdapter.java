@@ -22,15 +22,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     }
 
     public void setData(List<Category> newListCategories){
-        // Limpia la lista actual del adaptador.
+
         this.listCategories.clear();
 
-        // Si la nueva lista no es nula, agrega todos sus elementos.
         if(newListCategories != null){
             this.listCategories.addAll(newListCategories);
         }
 
-        // Notifica al RecyclerView que debe redibujar todos los elementos con la nueva información.
         notifyDataSetChanged();
     }
 

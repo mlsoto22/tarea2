@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NotesApp">
         <activity
-            android:name=".view.HistoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.AddCategoryActivity"
             android:exported="false" />
         <activity

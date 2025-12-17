@@ -42,7 +42,7 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="delete_note_alert">¿Estas seguro que quieres eliminar esta nota?</string>
+    <string name="delete_note_alert">¿Deseas eliminar la nota?</string>
     <string name="decline_text_dialog_alert">Cancelar</string>
     <string name="confirm_text_dialog_alert">Aceptar</string>
     <string name="category_place_holder_item_note">Nombre Categoria</string>
@@ -59,12 +59,12 @@
     <string name="tv_title_add_activity">Agregar notas</string>
     <string name="btn_add_category">Guardar categoria</string>
     <string name="et_hint_title_category">Nombre de la categoria</string>
-    <string name="tv_title_add_category">Agregar categoria</string>
+    <string name="tv_title_add_category">Agregar categoría</string>
     <string name="update_note_text">Actualizar nota\n</string>
     <string name="btn_update_note">Actualizar</string>
     <string name="error_empty_field">El campo no puede estar vacio</string>
-    <string name="delete_category_alert">¿Estas seguro que quieres eliminar esta categoria?</string>
-    <string name="linked_notes">notas asociadas perderan su categoria</string>
+    <string name="delete_category_alert">¿Deseas eliminar la categoria?</string>
+    <string name="linked_notes">Las notas asociadas se desvincularán</string>
     <string name="tv_notes_activity_category_count">" -> 0"</string>
     <string name="tv_title_history">Historial</string>
 

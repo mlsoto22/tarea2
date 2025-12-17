@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import com.fic.notesapp.R;
 import com.fic.notesapp.controller.CategoryController;
-import com.fic.notesapp.controller.HistoryController;
 import com.fic.notesapp.controller.NoteController;
 import com.fic.notesapp.model.CategorySpinner;
 import com.fic.notesapp.model.category.Category;
@@ -28,7 +27,6 @@ public class AddNotesActivity extends AppCompatActivity {
 
     NoteController noteController;
     CategoryController categoryController;
-    HistoryController historyController;
     EditText etTitle, etContent;
     Spinner spCategory;
     AppCompatButton btnAddNote;
@@ -55,7 +53,6 @@ public class AddNotesActivity extends AppCompatActivity {
         if (noteController == null && categoryController == null){
             noteController = new NoteController(this);
             categoryController = new CategoryController(this);
-            historyController = new HistoryController(this);
         }
         extraBoolean = getIntent().getBooleanExtra("ON_EDIT", false);
     }
@@ -148,7 +145,6 @@ public class AddNotesActivity extends AppCompatActivity {
     private void updateNote(){
         try {
             noteController.updateNote(extraNoteId, idCategory, etTitle.getText().toString(), etContent.getText().toString(), getCurrentDate());
-            historyController.insertHistory("U", "Informacion antes de la actualizacion \n\nTitulo: " + extraNoteTitle + "\nContenido: " + extraNoteContent, getCurrentDate());
             Toast.makeText(this, "La nota se ha actualizado correctamente", Toast.LENGTH_SHORT).show();
         } catch (Exception e){
             Toast.makeText(this, "No se ha podido actualizar la nota", Toast.LENGTH_SHORT).show();
@@ -160,7 +156,6 @@ public class AddNotesActivity extends AppCompatActivity {
         try {
             noteController.insertNote(etTitle.getText().toString(), etContent.getText().toString(), idCategory, getCurrentDate());
             Category category = categoryController.getCategoryById(idCategory);
-            historyController.insertHistory("C", "Una nueva nota se ha creado en la categoria: " + category.category_name, getCurrentDate());
             Toast.makeText(this, "La nota se ha guardado correctamente", Toast.LENGTH_SHORT).show();
         } catch (Exception e){
             Toast.makeText(this, "No se ha podido añadir la nota", Toast.LENGTH_SHORT).show();

@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fic.notesapp.R;
 import com.fic.notesapp.controller.CategoryController;
-import com.fic.notesapp.controller.HistoryController;
 import com.fic.notesapp.controller.NoteController;
 import com.fic.notesapp.model.category.Category;
 import com.fic.notesapp.model.note.Note;
@@ -38,7 +37,6 @@ public class CategoryActivity extends AppCompatActivity {
     NoteAdapter noteAdapter;
     RecyclerView rvNotes;
     CategoryController categoryController;
-    HistoryController historyController;
     NoteController noteController;
     FloatingActionButton fabAdd, fabAddNote;
     TextView tvNotesCount;
@@ -71,12 +69,10 @@ public class CategoryActivity extends AppCompatActivity {
         rvNotes = findViewById(R.id.rvNotes);
         categoryController = new CategoryController(this);
         noteController = new NoteController(this);
-        historyController = new HistoryController(this);
         fabAdd = findViewById(R.id.fabAdd);
         fabAddNote = findViewById(R.id.fabAddNote);
         searchList = new ArrayList<>();
         tvNotesCount = findViewById(R.id.tvNotesCount);
-        btnHistory = findViewById(R.id.btnHistory);
         svSearch = findViewById(R.id.svSearch);
 
     }
@@ -138,11 +134,6 @@ public class CategoryActivity extends AppCompatActivity {
 
         fabAddNote.setOnClickListener(view -> {
             addNoteActivity(false, null);
-        });
-
-        btnHistory.setOnClickListener(view -> {
-            Intent intent = new Intent(this, HistoryActivity.class);
-            startActivity(intent);
         });
 
         svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
