@@ -46,6 +46,7 @@ CREATE TABLE note (
 );
 
 INTERFACES DE USUARIO
+
 <img width="540" height="1144" alt="Captura de pantalla 2025-12-16 205709" src="https://github.com/user-attachments/assets/64a34a80-4a2d-4b57-8ba4-10e4606d947a" />
 <img width="514" height="1118" alt="Captura de pantalla 2025-12-16 205745" src="https://github.com/user-attachments/assets/7a440531-bf70-4958-a69f-5bb7fddc343e" />
 <img width="516" height="1122" alt="Captura de pantalla 2025-12-16 205918" src="https://github.com/user-attachments/assets/2e750f3a-0286-4564-a266-5006347930a8" />
