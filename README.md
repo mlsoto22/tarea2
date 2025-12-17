@@ -1,4 +1,5 @@
  NOMBRE DEL PROYECTO: NotesApp
+ 
  DESCRIPCIÓN:
  Aplicación con la finalidad de crear, editar y eliminar notas además de categorias.
 
@@ -31,6 +32,7 @@ com.fic.notesapp/
 
 
 ESTRUCTURA DE LA BASE DE DATOS
+
 CREATE TABLE category (
     category_id INTEGER PRIMARY KEY AUTOINCREMENT,
     category_name TEXT NOT NULL
